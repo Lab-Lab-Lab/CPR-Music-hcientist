@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useRef, useState, useCallback } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
 import dynamic from 'next/dynamic';
@@ -56,9 +56,6 @@ export default function CreativityActivity() {
     useState(false);
 
   const selectedMeasure = useRef({});
-  // function setSelectedMeasure(measure) {
-  //   selectedMeasure.current = measure;
-  // }
   const setSelectedMeasure = useCallback((measure) => {
     selectedMeasure.current = measure;
   }, []);
@@ -106,34 +103,17 @@ export default function CreativityActivity() {
     scoreJSON = JSON.parse(flatIOScoreForTransposition);
   }
 
-  // function handleTonicUpdate(data) {
-  //   tonicJson.current = data;
-  // }
-
   const handleTonicUpdate = useCallback((data) => {
     tonicJson.current = data;
   }, []);
-
-  // function handleSubdominantUpdate(data) {
-  //   subdominantJson.current = data;
-  // }
 
   const handleSubdominantUpdate = useCallback((data) => {
     subdominantJson.current = data;
   }, []);
 
-  // function handleDominantUpdate(data) {
-  //   dominantJson.current = data;
-  // }
-
   const handleDominantUpdate = useCallback((data) => {
     dominantJson.current = data;
   }, []);
-
-  // function generateVariations() {
-  // if (startedVariationGeneration) return;
-  // setStartedVariationGeneration(true);
-  // }
 
   const generateVariations = useCallback((data) => {
     if (startedVariationGeneration) return;
