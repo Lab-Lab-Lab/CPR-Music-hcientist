@@ -1,5 +1,6 @@
+import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
 import dynamic from 'next/dynamic';
@@ -147,9 +148,13 @@ export default function CreativityActivity() {
     scoreJSON = JSON.parse(flatIOScoreForTransposition);
   }
 
-  function onMerged(mergedData) {
+  // function onMerged(mergedData) {
+  //   totalScoreJSON.current = mergedData;
+  // }
+
+  const onMerged = useCallback((mergedData) => {
     totalScoreJSON.current = mergedData;
-  }
+  }, []);
 
   function handleSubmit(i) {
     return (data) => {
@@ -194,7 +199,7 @@ export default function CreativityActivity() {
           <Col md>
             {subScores &&
               subScores.map((subScore, idx) => (
-                <div key={idx}>
+                <div key={uuidv4()}>
                   <h2 id={`step-${idx + 1}`}>Step {idx + 1}</h2>
                   <ExploratoryCompose
                     referenceScoreJSON={subScore}
