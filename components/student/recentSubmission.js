@@ -10,14 +10,18 @@ const FlatEditor = dynamic(() => import('../flatEditor'), {
 
 export default function RecentSubmission(assn) {
   const {
-    assn: { activity_type_category = null, submissions, activity = null },
+    assn: {
+      activity_type_category: activityTypeCategory = null,
+      submissions,
+      activity = null,
+    },
   } = assn;
   if (!submissions || submissions.length === 0) return '';
   const mostRecent = submissions?.reduce((recent, current) =>
     new Date(recent.submitted) > new Date(current.submitted) ? recent : current,
   );
   const { submitted, content, attachments } = mostRecent;
-  const ctgy = activity_type_category ?? activity.activity_type.category;
+  const ctgy = activityTypeCategory ?? activity.activity_type.category;
 
   return (
     <Card>
@@ -43,9 +47,9 @@ export default function RecentSubmission(assn) {
       )}
       {content && content !== 'N/A for Perform submissions' && (
         <Card.Body>
-          {ctgy === 'Create' ? (
-            <FlatEditor scoreJSON={content} />
-          ) : ctgy === 'Respond' ? (
+          {ctgy === 'Create' && <FlatEditor scoreJSON={content} />}
+
+          {ctgy === 'Respond' && (
             <Row>
               <Col md={9}>
                 <textarea
@@ -67,8 +71,6 @@ export default function RecentSubmission(assn) {
                 </dl>
               </Col>
             </Row>
-          ) : (
-            ''
           )}
         </Card.Body>
       )}
